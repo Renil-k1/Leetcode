@@ -1,24 +1,26 @@
 class Solution {
     public List<Integer> findMissingElements(int[] nums) {
-        Arrays.sort(nums);
-       List<Integer> missing = new ArrayList<>();
-        
-        // The range goes from nums[0] (min) to nums[nums.length - 1] (max)
-        int minVal = nums[0];
-        int maxVal = nums[nums.length - 1];
-        
-        // Put elements in a HashSet for O(1) lookup, or use a pointer approach since it's sorted
-        boolean[] present = new boolean[maxVal + 1];
-        for (int num : nums) {
-            present[num] = true;
+        List<Integer> ans = new ArrayList<>();
+        int n = nums.length;
+        int max = nums[0];
+        int min = nums[0];
+
+        for(int i : nums){
+            max = Math.max(i, max);
+            min = Math.min(i, min);
         }
-        
-        // Check for missing numbers in the range
-        for (int i = minVal + 1; i < maxVal; i++) {
-            if (!present[i]) {
-                missing.add(i);
-            }
+
+        int[] arr = new int[max + 1];
+        for(int i : nums){
+            arr[i]++;
         }
-            return missing;
+
+        for(int i=min;i<max;i++){
+            if(arr[i] == 0)
+                ans.add(i);
+        }
+        return ans;
+
+
     }
-    }
+}
